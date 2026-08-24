@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using BLL.DTOs
+
+@{
+    ViewData["Title"] = "Mark Attendance";
+
+    var session = ViewBag.Session;
+    var students = ViewBag.Students;
+    var existingAttendance = ViewBag.ExistingAttendance as List<AttendanceDTO>;
+}
+
+<h1>Mark Attendance</h1>
+
+<h4>Session Id: @session.SessionId</h4>
+<h4>Class Id: @session.ClassId</h4>
+<h4>Date: @session.AttendanceDate</h4>
+
+<form method="post">
+
+    <input type="hidden" name="sessionId" value="@session.SessionId" />
+
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>Student Id</th>
+                <th>Student Name</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @for (int i = 0; i < students.Count; i++)
+            {
+                var s = students[i];
+                var old = existingAttendance?.FirstOrDefault(a => a.StudentId == s.UserId);
+
+                <tr>
+                    <td>
+                        @s.UserId
+                        <input type="hidden" name="StudentIds" value="@s.UserId" />
+                    </td>
+
+                    <td>
+                        @s.FullName
+                    </td>
+
+                    <td>
+                        <input type="radio" name="Statuses[@i]" value="Present" @(old != null && old.Status == "Present" ? "checked" : null) />
+                    </td>
+
+                    <td>
+                        <input type="radio"name="Statuses[@i]" value="Absent" @(old != null && old.Status == "Absent" ? "checked" : null) />
+                    </td>
+
+                    <td>
+                        <input type="text" name="Remarks" value="@old?.Remarks" class="form-control" />
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+    <div class="mt-3">
+        <input type="submit" value="Save Attendance" class="btn btn-primary" />
+    </div>
+
+</form>

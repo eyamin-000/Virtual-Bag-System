@@ -1,0 +1,112 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<BLL.DTOs.UserDTO>
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<h2 class="mb-3" style="text-align:center">User Management</h2>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Msg"]
+    </div>
+}
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary"> + Create New User
+    </a>
+</div>
+
+<table class="table table-bordered table-hover align-middle">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Class</th>
+            <th>Status</th>
+            <th width="180">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                string roleClass = "bg-secondary";
+
+                if (item.Role == "Admin")
+                {
+                    roleClass = "bg-danger";
+                }
+                else if (item.Role == "Teacher")
+                {
+                    roleClass = "bg-primary";
+                }
+                else if (item.Role == "Student")
+                {
+                    roleClass = "bg-success";
+                }
+
+                <tr>
+                    <td>@item.UserId</td>
+
+                    <td>
+                        <strong>@item.FullName</strong>
+                    </td>
+
+                    <td>@item.Email</td>
+
+                    <td>
+                        <span>
+                            @item.Role
+                        </span>
+                    </td>
+
+                    <td>
+                        @(item.ClassId == null ? "-" : item.ClassId.ToString())
+                    </td>
+
+                    <td>
+                        @if (item.Status == "Active")
+                        {
+                            <span class="badge bg-success">
+                                Active
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Inactive
+                            </span>
+                        }
+                    </td>
+
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.UserId" class="btn btn-warning btn-sm"> Edit </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-danger btn-sm"> Delete </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted"> No User Found </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

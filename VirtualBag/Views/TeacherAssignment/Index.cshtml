@@ -1,0 +1,90 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<BLL.DTOs.TeacherAssignmentDTO>
+
+<h1>Teacher Assignment List</h1>
+
+@if (TempData["Msg"] != null)
+{
+    <p class="text-success">
+        @TempData["Msg"]
+    </p>
+}
+
+<p>
+    <a asp-action="Create"class="btn btn-primary"> Assign Teacher </a>
+</p>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Assignment Id</th>
+            <th>Teacher</th>
+            <th>Class</th>
+            <th>Subject</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                var teacherName = "";
+                var className = "";
+                var subjectName = "";
+
+                foreach (var t in ViewBag.Teachers)
+                {
+                    if (t.UserId == item.TeacherId)
+                    {
+                        teacherName = t.FullName;
+                    }
+                }
+
+                foreach (var c in ViewBag.Classes)
+                {
+                    if (c.ClassId == item.ClassId)
+                    {
+                        className = c.ClassName;
+                    }
+                }
+
+                foreach (var s in ViewBag.Subjects)
+                {
+                    if (s.SubjectId == item.SubjectId)
+                    {
+                        subjectName = s.SubjectName;
+                    }
+                }
+
+                <tr>
+                    <td>@item.AssignmentId</td>
+                    <td>@teacherName</td>
+                    <td>@className</td>
+                    <td>@subjectName</td>
+
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.AssignmentId" class="btn btn-warning"> Edit </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.AssignmentId" class="btn btn-danger"> Delete </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center"> No Assignment Found </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

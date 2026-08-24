@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BLL.DTOs.SubjectDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete Subject</h1>
+
+<h4>Are you sure?</h4>
+
+<form method="post">
+
+    <input asp-for="SubjectId" hidden />
+
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Subject Name</th>
+            <td>@Model.SubjectName</td>
+        </tr>
+
+        <tr>
+            <th>Class Id</th>
+            <td>@Model.ClassId</td>
+        </tr>
+
+    </table>
+
+    <button name="Decison" value="Yes" class="btn btn-danger"> Yes</button>
+
+    <button name="Decison"value="No" class="btn btn-secondary"> No </button>
+
+</form>

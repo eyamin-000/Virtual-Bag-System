@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<BLL.DTOs.AttendanceSessionDTO>
+
+<h1>Attendance Session List</h1>
+
+@if (TempData["Msg"] != null)
+{
+    <p class="text-success">
+        @TempData["Msg"]
+    </p>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary"> Create Attendance Session</a>
+</p>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Session Id</th>
+            <th>Teacher</th>
+            <th>Class</th>
+            <th>Subject</th>
+            <th>Attendance Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                var teacherName = "";
+                var className = "";
+                var subjectName = "";
+
+                foreach (var t in ViewBag.Teachers)
+                {
+                    if (t.UserId == item.TeacherId)
+                    {
+                        teacherName = t.FullName;
+                    }
+                }
+
+                foreach (var c in ViewBag.Classes)
+                {
+                    if (c.ClassId == item.ClassId)
+                    {
+                        className = c.ClassName;
+                    }
+                }
+
+                foreach (var s in ViewBag.Subjects)
+                {
+                    if (s.SubjectId == item.SubjectId)
+                    {
+                        subjectName = s.SubjectName;
+                    }
+                }
+
+                <tr>
+                    <td>@item.SessionId</td>
+                    <td>@teacherName</td>
+                    <td>@className</td>
+                    <td>@subjectName</td>
+                    <td>@item.AttendanceDate</td>
+
+                    <td>
+                        <a asp-controller="Attendance" asp-action="Mark" asp-route-sessionId="@item.SessionId" class="btn btn-info"> Mark </a>
+
+                        <a asp-action="Update" asp-route-id="@item.SessionId" class="btn btn-warning"> Edit </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.SessionId" class="btn btn-danger"> Delete </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center"> No Attendance Session Found</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

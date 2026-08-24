@@ -1,0 +1,14 @@
+# Visual Studio cache & temporary files
+.vs/
+*.user
+*.suo
+
+# Build outputs
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+
+# User-specific files
+*.rsuser
+*.userlibraries

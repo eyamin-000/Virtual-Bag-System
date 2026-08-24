@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="BLL/BLL.csproj" />
+  <Project Path="ClassLibrary1/ClassLibrary1.csproj" Id="5b153e86-aad7-41aa-af4f-01d6c882f9e6" />
+  <Project Path="DAL/DAL.csproj" />
+  <Project Path="VirtualBag/VirtualBag.csproj" />
+</Solution>

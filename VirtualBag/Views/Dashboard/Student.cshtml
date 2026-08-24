@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+<div>
+    <a asp-controller="Notification"
+           asp-action="Index"
+           class="btn btn-danger w-20 p-1">
+        Notifications
+    </a>
+</div>
+
+<h1 style="color:tomato; text-align:center">Student Dashboard</h1>
+<br />
+<h4>Welcome, @ViewBag.UserName</h4>
+
+<hr />
+
+<div class="row mb-4">
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>My Class</h5>
+                <h4>@ViewBag.ClassName</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Total Homework</h5>
+                <h4>@ViewBag.TotalHomework</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Pending Homework</h5>
+                <h4>@ViewBag.PendingHomework</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Attendance</h5>
+                <h4>@ViewBag.AttendancePercentage%</h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<h4>Attendance Summary</h4>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Present</th>
+        <td>@ViewBag.PresentCount</td>
+    </tr>
+
+    <tr>
+        <th>Absent</th>
+        <td>@ViewBag.AbsentCount</td>
+    </tr>
+</table>
+
+<hr />
+
+<div class="row">
+
+    <div class="col-md-3 mb-3">
+        <a asp-controller="Book" asp-action="Index" class="btn btn-primary w-100 p-4"> Digital Library</a>
+    </div>
+
+    <div class="col-md-3 mb-3"><a asp-controller="Homework" asp-action="Index" class="btn btn-warning w-100 p-4">Homework</a>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <a asp-controller="HomeworkSubmission" asp-action="Index" class="btn btn-success w-100 p-4">My Submissions</a>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <a asp-controller="Note" asp-action="Index" class="btn btn-info w-100 p-4">My Notes</a>
+    </div>
+
+</div>

@@ -1,0 +1,111 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<BLL.DTOs.HomeworkDTO>
+
+<h1>Homework List</h1>
+
+@if (TempData["Msg"] != null)
+{
+    <p class="text-success">@TempData["Msg"]</p>
+}
+
+@if (Context.Session.GetString("Role") == "Teacher")
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New Homework</a>
+    </p>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Class</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                var className = "";
+                var subjectName = "";
+                var teacherName = "";
+
+                foreach (var c in ViewBag.Classes)
+                {
+                    if (c.ClassId == item.ClassId)
+                    {
+                        className = c.ClassName;
+                    }
+                }
+
+                foreach (var s in ViewBag.Subjects)
+                {
+                    if (s.SubjectId == item.SubjectId)
+                    {
+                        subjectName = s.SubjectName;
+                    }
+                }
+
+                foreach (var t in ViewBag.Teachers)
+                {
+                    if (t.UserId == item.TeacherId)
+                    {
+                        teacherName = t.FullName;
+                    }
+                }
+
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Description</td>
+                    <td>@className</td>
+                    <td>@subjectName</td>
+                    <td>@teacherName</td>
+                    <td>@item.Deadline</td>
+
+                    <td>
+                        @if (item.DeadlineStatus == "Overdue")
+                        {
+                            <span class="text-danger">Overdue</span>
+                        }
+                        else
+                        {
+                            <span class="text-success">Pending</span>
+                        }
+                    </td>
+
+                    <td>
+                        @if (Context.Session.GetString("Role") == "Teacher")
+                        {
+                            <a asp-action="Update" asp-route-id="@item.HomeworkId" class="btn btn-warning"> Edit </a>
+
+                            <a asp-action="Delete" asp-route-id="@item.HomeworkId" class="btn btn-danger"> Delete </a>
+                        }
+
+                        @if (Context.Session.GetString("Role") == "Student")
+                        {
+                            <a asp-controller="HomeworkSubmission" asp-action="Create" asp-route-homeworkId="@item.HomeworkId" class="btn btn-success"> Submit </a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" class="text-center">No Homework Found</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BLL.DTOs.AttendanceDTO
+
+<h1>Delete Attendance</h1>
+
+<h4>Are you sure?</h4>
+
+<form method="post">
+
+    <input asp-for="AttendanceId" hidden />
+
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Status</th>
+            <td>@Model.Status</td>
+        </tr>
+
+        <tr>
+            <th>Remarks</th>
+            <td>@Model.Remarks</td>
+        </tr>
+
+    </table>
+
+    <button name="Decison" value="Yes" class="btn btn-danger"> Yes </button>
+
+    <button name="Decison"value="No" class="btn btn-secondary"> No </button>
+
+</form>

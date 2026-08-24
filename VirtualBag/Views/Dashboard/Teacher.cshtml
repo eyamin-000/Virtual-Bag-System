@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Teacher Dashboard";
+
+    var assignments = ViewBag.Assignments;
+}
+
+<h1 style="color:tomato; text-align:center">Teacher Dashboard</h1>
+
+<h4>Welcome,<span style="color:crimson"> @ViewBag.UserName</span></h4>
+
+<hr />
+
+<h5>Total Assigned Class/Subject: @ViewBag.TotalAssignments</h5>
+
+<table class="table table-bordered mt-3">
+
+    <thead>
+        <tr>
+            <th>Class</th>
+            <th>Subject</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @if (assignments != null && assignments.Count > 0)
+        {
+            foreach (var item in assignments)
+            {
+                var className = "";
+                var subjectName = "";
+
+                foreach (var c in ViewBag.Classes)
+                {
+                    if (c.ClassId == item.ClassId)
+                    {
+                        className = c.ClassName;
+                    }
+                }
+
+                foreach (var s in ViewBag.Subjects)
+                {
+                    if (s.SubjectId == item.SubjectId)
+                    {
+                        subjectName = s.SubjectName;
+                    }
+                }
+
+                <tr>
+                    <td>@className</td>
+                    <td>@subjectName</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2" class="text-center"> No class or subject assigned yet. </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<hr />
+
+<div class="row">
+
+    <div class="col-md-4 mb-3">
+        <a asp-controller="Homework" asp-action="Index" class="btn btn-primary w-100 p-4">Homework Management</a>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <a asp-controller="AttendanceSession" asp-action="Index" class="btn btn-success w-100 p-4">Attendance</a>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <a asp-controller="HomeworkSubmission" asp-action="Index" class="btn btn-warning w-100 p-4">Homework Submissions</a>
+    </div>
+
+</div>

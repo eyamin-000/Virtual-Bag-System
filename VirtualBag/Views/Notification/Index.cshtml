@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<BLL.DTOs.NotificationDTO>
+
+<h2>My Notifications</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Message</td>
+                    <td>@item.CreatedAt</td>
+                    <td>
+                        @if (item.IsRead == true)
+                        {
+                            <span class="text-success">Read</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Unread</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsRead != true)
+                        {
+                            <a asp-action="MarkAsRead" asp-route-id="@item.NotificationId" class="btn btn-sm btn-primary"> Mark as Read </a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center"> No notifications found. </td>
+            </tr>
+        }
+    </tbody>
+</table>

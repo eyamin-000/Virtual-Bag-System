@@ -1,0 +1,68 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<BLL.DTOs.NoteDTO>
+
+<h1>Note List</h1>
+
+@if (TempData["Msg"] != null)
+{
+    <p class="text-success">
+        @TempData["Msg"]
+    </p>
+}
+
+<p>
+    <a asp-action="Create"class="btn btn-primary"> Create New Note </a>
+</p>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Note Id</th>
+            <th>Student Id</th>
+            <th>Subject Id</th>
+            <th>Title</th>
+            <th>Color</th>
+            <th>Last Updated</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr style="background-color:@item.NoteColor">
+
+                    <td>@item.NoteId</td>
+                    <td>@item.StudentId</td>
+                    <td>@item.SubjectId</td>
+                    <td>@item.Title</td>
+                    <td>@item.NoteColor</td>
+                    <td>@item.LastUpdated</td>
+
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.NoteId" class="btn btn-warning"> Edit </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.NoteId" class="btn btn-danger"> Delete </a>
+                    </td>
+
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center"> No Notes Found </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
